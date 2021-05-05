@@ -1,0 +1,12 @@
+#cloud-config
+
+repo_update: true
+repo_upgrade: all
+
+packages:
+    - nginx
+
+runcmd:
+    - [hostname, ${hostname}]
+    - echo "<html><body><h1>${hostname} IS ALIVE!!!</h1></body></html>" | tee /var/www/html/index.nginx-debian.html
+    - [systemctl, reload, nginx]

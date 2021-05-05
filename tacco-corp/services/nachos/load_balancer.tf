@@ -1,6 +1,5 @@
 module "loadbalancer" {
-  // source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/digitalocean/load-balancer?ref=do-droplet-v1.0.0"
-  source = "../../../vendors/digitalocean/load-balancer"
+  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/digitalocean/load-balancer?ref=do-lb-v1.0.0"
 
   env         = var.env
   subdomain   = var.lb_subdomain

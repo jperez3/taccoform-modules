@@ -21,7 +21,7 @@
 
 ```hcl
 module "module_name" {
-  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/cloudprovider/vm?ref=cloud-resource-v1.0.0"
+  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/cloudprovider/vm?ref=cloud-vm-v1.0.0"
 
   env     = "prod"
   service = "burrito"

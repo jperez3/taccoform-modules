@@ -1,3 +1,17 @@
+############
+# Provider #
+############
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+  required_version = ">= 1.0.0"
+}
+
+
 ##############
 # Packer IAM #
 ##############
@@ -32,6 +46,7 @@ resource "aws_iam_role_policy_attachment" "ec2_ssm" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+
 #######
 # VPC #
 #######
@@ -41,15 +56,12 @@ data "aws_region" "current" {}
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "vpc1"
-  cidr = "10.0.0.0/16"
-
-  azs             = ["${data.aws_region.current.name}a", "${data.aws_region.current.name}b"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
-
-  enable_nat_gateway = false
-  single_nat_gateway = true
+  azs                = ["${data.aws_region.current.name}a"]
+  cidr               = "10.0.0.0/16"
+  enable_nat_gateway = true
+  private_subnets    = ["10.0.1.0/24"]
+  public_subnets     = ["10.0.2.0/24"]
+  name               = "vpc1"
 
   vpc_tags = {
     Name = "vpc1"
@@ -69,5 +81,5 @@ output "private_subnet_id" {
 }
 
 output "iam_instance_profile" {
-    value - aws_iam_instance_profile.packer.name
+    value = aws_iam_instance_profile.packer.name
 }

@@ -1,5 +1,10 @@
 source "amazon-ebs" "linux" {
 
+//   assume_role {
+//     role_arn     = "arn:aws:iam::229179723177:role/OrganizationAccountAccessRole"
+//     session_name = "packer"
+//   }
+
   source_ami_filter {
     filters = {
       name                = "amzn2-ami-hvm-*-x86_64-ebs"

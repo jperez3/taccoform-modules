@@ -11,13 +11,30 @@ terraform {
   required_version = ">= 1.0.0"
 }
 
+provider "aws" {
+  region = "us-east-1"
+
+  default_tags {
+    tags = {
+      Company     = "tacco-corp"
+      Environment = "prod"
+      Service     = "burrito"
+      TFWorkspace = "taccoform-modules/packer/basic"
+    }
+  }
+}
+
 
 ##############
 # Packer IAM #
 ##############
 
+locals {
+  name = "taccoform-packer"
+}
+
 resource "aws_iam_role" "packer" {
-  name = "packer"
+  name = local.name
 
   assume_role_policy = <<EOF
 {
@@ -37,7 +54,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "packer" {
-  name = "packer"
+  name = local.name
   role = aws_iam_role.packer.name
 }
 
@@ -61,10 +78,10 @@ module "vpc" {
   enable_nat_gateway = true
   private_subnets    = ["10.0.1.0/24"]
   public_subnets     = ["10.0.2.0/24"]
-  name               = "vpc1"
+  name               = local.name
 
   vpc_tags = {
-    Name = "vpc1"
+    Name = local.name
   }
 }
 

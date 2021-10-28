@@ -22,9 +22,8 @@ source "amazon-ebs" "linux" {
   # connection parameters
   communicator                 = var.communicator
   ssh_username                 = var.ssh_username
-
-  ssh_interface        = "session_manager"
-  iam_instance_profile = "packer"
+  ssh_interface                = var.ssh_interface
+  iam_instance_profile         = var.iam_instance_profile
 
   tags = {
     Environment     = var.env

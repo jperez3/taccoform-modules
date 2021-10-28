@@ -28,3 +28,13 @@ variable "ssh_username" {
     description = "ssh username for packer to use for provisioning"
     default     = "ec2-user"
 }
+
+variable "ssh_interface" {
+    description = "ssh interface for packer to use for provisioning"
+    default     = "session_manager"
+}
+
+variable "iam_instance_profile" {
+    description = "IAM instace profile to attach to AMI instance to allow connectivity via session manager"
+    default     = "taccoform-packer"
+}

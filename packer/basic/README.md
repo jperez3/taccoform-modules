@@ -17,11 +17,12 @@
 1. Create AWS credentials
 2. Install and configure awscli
 3. Validate awscli configuration: `aws sts get-caller-identity`
-4. Install [terraform](https://www.terraform.io/downloads.html)
-5. Initialize Terraform: `terraform init`
-6. Apply Terraform: `terraform apply`
-7. Set VPC ID Packer variable: `export PKR_VAR_vpc_id=$(terraform output -raw vpc_id)`
-8. Set VPC Subnet ID Packer variable: `export PKR_VAR_subnet_id=$(terraform output -raw private_subnet_id)`
+4. Install the [AWS Session Manager Plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+5. Install [terraform](https://www.terraform.io/downloads.html)
+6. Initialize Terraform: `terraform init`
+7. Apply Terraform: `terraform apply`
+8. Set VPC ID Packer variable: `export PKR_VAR_vpc_id=$(terraform output -raw vpc_id)`
+9. Set VPC Subnet ID Packer variable: `export PKR_VAR_subnet_id=$(terraform output -raw private_subnet_id)`
 
 ### Usage
 
@@ -54,7 +55,7 @@
 
 | Variable Name | Description            |  Type  | Notes |
 | :------------ | :--------------------- | :----: | :---- |
-| id            | unique id for resource | string | N/A   |
+
 
 ### Lessons Learned
 

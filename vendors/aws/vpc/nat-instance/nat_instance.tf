@@ -55,7 +55,7 @@ resource "aws_instance" "nat" {
   count = var.nat_instance_count
 
   ami                         = data.aws_ami.amazon_linux_2.id
-  instance_type               = "t2.micro"
+  instance_type               = var.nat_intance_type
   subnet_id                   = aws_subnet.public[count.index].id
   associate_public_ip_address = "true"
   source_dest_check           = "false"
@@ -63,23 +63,27 @@ resource "aws_instance" "nat" {
   iam_instance_profile        = aws_iam_instance_profile.ec2.id
   user_data                   = file("${path.module}/templates/user-data.sh")
 
+  lifecycle {
+      create_before_destroy = true
+  }
+
   tags = {
     Name = "nat${count.index}-${local.vpc_name}"
   }
 }
 
-# resource "aws_instance" "test" {
-#   count = 2
-#   ami                         = data.aws_ami.amazon_linux_2.id
-#   instance_type               = "t2.micro"
-#   subnet_id                   = aws_subnet.private[count.index].id
-#   vpc_security_group_ids      = [aws_security_group.ec2.id]
-#   iam_instance_profile        = aws_iam_instance_profile.ec2.id
+resource "aws_instance" "test" {
+  count = 2
+  ami                         = data.aws_ami.amazon_linux_2.id
+  instance_type               = var.nat_intance_type
+  subnet_id                   = aws_subnet.private[count.index].id
+  vpc_security_group_ids      = [aws_security_group.ec2.id]
+  iam_instance_profile        = aws_iam_instance_profile.ec2.id
 
-#   tags = {
-#     Name = "test${count.index}"
-#   }
-# }
+  tags = {
+    Name = "test${count.index}-${local.vpc_name}"
+  }
+}
 
 ###########
 # Outputs #

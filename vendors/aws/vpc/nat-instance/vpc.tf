@@ -35,7 +35,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name         = "public-route-table-${local.vpc_name}"
+    Name         = "public0-${local.vpc_name}"
     Network_Type = "public"
   }
 }
@@ -66,7 +66,7 @@ resource "aws_route_table_association" "public" {
 ##########################
 
 resource "aws_route_table" "private" {
-  count = var.private_route_table_count
+  count = var.nat_instance_count
 
   vpc_id = aws_vpc.main.id
 
@@ -76,7 +76,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name         = "private-route-table${count.index}-${local.vpc_name}"
+    Name         = "private${count.index}-${local.vpc_name}"
     Network_Type = "private"
   }
 }

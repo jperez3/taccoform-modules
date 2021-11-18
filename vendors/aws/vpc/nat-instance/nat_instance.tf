@@ -52,9 +52,11 @@ resource "aws_security_group" "ec2" {
 ############
 
 resource "aws_instance" "nat" {
-  ami                         = data.aws_ami.ami.id
+  count = var.nat_instance_count
+
+  ami                         = data.aws_ami.amazon_linux_2.id
   instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.tf_public_subnet.id
+  subnet_id                   = aws_subnet.public[count.index].id
   associate_public_ip_address = "true"
   source_dest_check           = "false"
   vpc_security_group_ids      = [aws_security_group.ec2.id]
@@ -62,14 +64,27 @@ resource "aws_instance" "nat" {
   user_data                   = file("${path.module}/templates/user-data.sh")
 
   tags = {
-    Name = local.nat_instance_name
+    Name = "nat${count.index}-${local.vpc_name}"
   }
 }
+
+# resource "aws_instance" "test" {
+#   count = 2
+#   ami                         = data.aws_ami.amazon_linux_2.id
+#   instance_type               = "t2.micro"
+#   subnet_id                   = aws_subnet.private[count.index].id
+#   vpc_security_group_ids      = [aws_security_group.ec2.id]
+#   iam_instance_profile        = aws_iam_instance_profile.ec2.id
+
+#   tags = {
+#     Name = "test${count.index}"
+#   }
+# }
 
 ###########
 # Outputs #
 ###########
 
 output "nat_instance_id" {
-  value = aws_instance.nat.id
+  value = aws_instance.nat[*].id
 }

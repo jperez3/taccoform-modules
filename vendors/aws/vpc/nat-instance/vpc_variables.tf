@@ -14,8 +14,3 @@ variable "private_subnets" {
 variable "public_subnets" {
   description = "list of public subnets to create based on the provided CIDR block"
 }
-
-
-locals {
-  vpc_name = "${var.vpc_name_prefix}-${var.env}"
-}

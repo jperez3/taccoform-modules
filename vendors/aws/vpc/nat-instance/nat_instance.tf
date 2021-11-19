@@ -67,9 +67,12 @@ resource "aws_instance" "nat" {
       create_before_destroy = true
   }
 
-  tags = {
-    Name = "nat${count.index}-${local.vpc_name}"
-  }
+  tags = merge(
+      local.common_tags,
+      tomap({
+          "Name"         = "nat${count.index}-${local.vpc_name}"
+      })
+  )
 }
 
 resource "aws_instance" "test" {
@@ -80,9 +83,13 @@ resource "aws_instance" "test" {
   vpc_security_group_ids      = [aws_security_group.ec2.id]
   iam_instance_profile        = aws_iam_instance_profile.ec2.id
 
-  tags = {
-    Name = "test${count.index}-${local.vpc_name}"
-  }
+
+  tags = merge(
+      local.common_tags,
+      tomap({
+          "Name"         = "test${count.index}-${local.vpc_name}"
+      })
+  )
 }
 
 ###########

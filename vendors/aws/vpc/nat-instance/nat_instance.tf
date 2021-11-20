@@ -42,9 +42,13 @@ resource "aws_security_group" "ec2" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags = {
-    Name = local.nat_instance_name
-  }
+
+  tags = merge(
+    local.common_tags,
+    tomap({
+      "Name" = local.nat_instance_name
+    })
+  )
 }
 
 ############
@@ -64,31 +68,14 @@ resource "aws_instance" "nat" {
   user_data                   = file("${path.module}/templates/user-data.sh")
 
   lifecycle {
-      create_before_destroy = true
+    create_before_destroy = true
   }
 
   tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "nat${count.index}-${local.vpc_name}"
-      })
-  )
-}
-
-resource "aws_instance" "test" {
-  count = 2
-  ami                         = data.aws_ami.amazon_linux_2.id
-  instance_type               = var.nat_intance_type
-  subnet_id                   = aws_subnet.private[count.index].id
-  vpc_security_group_ids      = [aws_security_group.ec2.id]
-  iam_instance_profile        = aws_iam_instance_profile.ec2.id
-
-
-  tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "test${count.index}-${local.vpc_name}"
-      })
+    local.common_tags,
+    tomap({
+      "Name" = "nat${count.index}-${local.vpc_name}"
+    })
   )
 }
 

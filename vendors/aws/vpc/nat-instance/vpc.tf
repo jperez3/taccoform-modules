@@ -3,13 +3,13 @@
 #######
 
 resource "aws_vpc" "main" {
-  cidr_block           = var.cidr_block
+  cidr_block           = local.cidr_block
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
 
   tags = merge(
-      local.common_tags,
-      tomap({"Name" = "${local.vpc_name}"})
+    local.common_tags,
+    tomap({ "Name" = "${local.vpc_name}" })
   )
 }
 
@@ -23,11 +23,11 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "igw-${local.vpc_name}"
-          "Network_Type" = "public"
-      })
+    local.common_tags,
+    tomap({
+      "Name"         = "igw-${local.vpc_name}"
+      "Network_Type" = "public"
+    })
   )
 }
 
@@ -41,29 +41,29 @@ resource "aws_route_table" "public" {
 
 
   tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "public0-${local.vpc_name}"
-          "Network_Type" = "public"
-      })
-  )  
+    local.common_tags,
+    tomap({
+      "Name"         = "public0-${local.vpc_name}"
+      "Network_Type" = "public"
+    })
+  )
 }
 
 resource "aws_subnet" "public" {
-  count = length(var.public_subnets)
+  count = length(local.public_subnets)
 
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.public_subnets[count.index]
+  cidr_block        = local.public_subnets[count.index]
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
 
   tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "public${count.index}-${local.vpc_name}"
-          "Network_Type" = "public"
-      })
-  )  
+    local.common_tags,
+    tomap({
+      "Name"         = "public${count.index}-${local.vpc_name}"
+      "Network_Type" = "public"
+    })
+  )
 }
 
 resource "aws_route_table_association" "public" {
@@ -91,29 +91,29 @@ resource "aws_route_table" "private" {
 
 
   tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "private${count.index}-${local.vpc_name}"
-          "Network_Type" = "private"
-      })
-  )   
+    local.common_tags,
+    tomap({
+      "Name"         = "private${count.index}-${local.vpc_name}"
+      "Network_Type" = "private"
+    })
+  )
 }
 
 resource "aws_subnet" "private" {
-  count = length(var.private_subnets)
+  count = length(local.private_subnets)
 
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnets[count.index]
+  cidr_block        = local.private_subnets[count.index]
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
 
   tags = merge(
-      local.common_tags,
-      tomap({
-          "Name"         = "private${count.index}-${local.vpc_name}"
-          "Network_Type" = "private"
-      })
-  )   
+    local.common_tags,
+    tomap({
+      "Name"         = "private${count.index}-${local.vpc_name}"
+      "Network_Type" = "private"
+    })
+  )
 }
 
 resource "aws_route_table_association" "private" {

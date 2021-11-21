@@ -4,7 +4,14 @@
 
 resource "aws_iam_role" "ec2" {
   name               = local.nat_instance_name
-  assume_role_policy = file("${path.module}/templates/ec2_iam_role.json")
+  assume_role_policy = file("${path.module}/files/ec2_iam_role.json")
+
+  tags = merge(
+    local.common_tags,
+    tomap({
+      "Name" = local.nat_instance_name
+    })
+  )  
 
 }
 
@@ -18,6 +25,13 @@ resource "aws_iam_policy_attachment" "ec2_ssm" {
 resource "aws_iam_instance_profile" "ec2" {
   name = local.nat_instance_name
   role = aws_iam_role.ec2.name
+
+  tags = merge(
+    local.common_tags,
+    tomap({
+      "Name" = local.nat_instance_name
+    })
+  )  
 }
 
 ##################
@@ -65,11 +79,17 @@ resource "aws_instance" "nat" {
   source_dest_check           = "false"
   vpc_security_group_ids      = [aws_security_group.ec2.id]
   iam_instance_profile        = aws_iam_instance_profile.ec2.id
-  user_data                   = file("${path.module}/templates/user-data.sh")
+  user_data                   = file("${path.module}/files/user-data.sh")
 
   lifecycle {
     create_before_destroy = true
   }
+
+
+  # Script to give NAT Instance time to wake up
+  provisioner "local-exec" {
+    command = "./${path.module}/files/check_instance_state.sh ${self.id}"
+  }  
 
   tags = merge(
     local.common_tags,

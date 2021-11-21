@@ -28,7 +28,7 @@ module "vpc" {
 }
 ```
 
-- Creates a vpc with:
+- Creates a VPC with:
   - name: `main-prod`
   - CIDR: `10.45.0.0/16`
   - Private Subnets: `10.45.0.0/19` + `10.45.32.0/19`
@@ -49,7 +49,7 @@ module "vpc" {
 }
 ```
 
-- Creates a vpc with:
+- Creates a VPC with:
   - name: `tacos-por-favor`
   - CIDR: `10.45.0.0/16`
   - Private Subnets: `10.45.0.0/19` + `10.45.32.0/19`
@@ -67,7 +67,7 @@ module "vpc" {
 }
 ```
 
-- Creates a vpc with:
+- Creates a VPC with:
   - name: `main-prod`
   - CIDR: `10.123.0.0/16`
   - Private Subnets: `10.123.0.0/19` + `10.123.32.0/19`
@@ -104,3 +104,4 @@ module "vpc" {
 - [Practical VPC Design](https://medium.com/aws-activate-startup-blog/practical-vpc-design-8412e1a18dcc)
 - [Taccoform](https://www.taccoform.com)
 - [Terraform Variable Validation](https://medium.com/codex/terraform-variable-validation-b9b3e7eddd79)
+- [Zero Downtime Update with Terraform](https://www.hashicorp.com/blog/zero-downtime-updates-with-terraform)

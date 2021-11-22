@@ -103,6 +103,6 @@ resource "aws_instance" "nat" {
 # Outputs #
 ###########
 
-output "nat_instance_id" {
+output "nat_instance_ids" {
   value = aws_instance.nat[*].id
 }

@@ -20,7 +20,7 @@
 ```hcl
 
 module "vpc" {
-  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/aws/vpc/nat-instance?ref=vndr-aws-vpc-ni-v1.0.0"
+  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/aws/vpc/nat-instance?ref=aws-vpc-ni-v1.0.0"
 
   env = "prod"
 
@@ -33,18 +33,19 @@ module "vpc" {
   - CIDR: `10.45.0.0/16`
   - Private Subnets: `10.45.0.0/19` + `10.45.32.0/19`
   - Public Subnets: `10.45.64.0/20` + `10.45.80.0/20`
+- Cost: ~$6/month
 
 #### Terraform (custom)
 
 ```hcl
 
 module "vpc" {
-  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/aws/vpc/nat-instance?ref=vndr-aws-vpc-ni-v1.0.0"
+  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/aws/vpc/nat-instance?ref=aws-vpc-ni-v1.0.0"
 
   env = "prod"
 
-  custom_vpc_name         = "tacos-por-favor"
   cidr_block              = "10.45.0.0"
+  custom_vpc_name         = "tacos-por-favor"
   enable_jumpbox_instance = true
 }
 ```
@@ -55,13 +56,14 @@ module "vpc" {
   - Private Subnets: `10.45.0.0/19` + `10.45.32.0/19`
   - Public Subnets: `10.45.64.0/20` + `10.45.80.0/20`
   - Enables jumpbox instance with Session Manager enabled to validate/troubleshoot NAT Instance connectivity
+- Cost: ~$9/month
 
 #### Terraform (minimal)
 
 ```hcl
 
 module "vpc" {
-  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/aws/vpc/nat-instance?ref=vndr-aws-vpc-ni-v1.0.0"
+  source = "git::git@github.com:jperez3/taccoform-modules.git//vendors/aws/vpc/nat-instance?ref=aws-vpc-ni-v1.0.0"
 
   env = "prod"
 }
@@ -72,6 +74,7 @@ module "vpc" {
   - CIDR: `10.123.0.0/16`
   - Private Subnets: `10.123.0.0/19` + `10.123.32.0/19`
   - Public Subnets: `10.123.64.0/20` + `10.123.80.0/20`
+- Cost: ~$6/month  
 
 #### Inputs
 
@@ -85,17 +88,19 @@ module "vpc" {
 
 #### Outputs
 
-| Variable Name      | Description        |  Type  | Notes |
-| :----------------- | :----------------- | :----: | :---- |
-| nat_instance_id    | NAT Instance IDs   |  list  | N/A   |
-| private_subnet_ids | Private Subnet IDs |  list  | N/A   |
-| public_subnet_ids  | Public Subnet IDs  |  list  | N/A   |
-| vpc_id             | VPC ID             | string | N/A   |
+| Variable Name       | Description         |  Type  | Notes |
+| :------------------ | :------------------ | :----: | :---- |
+| jumpbox_instance_id | Jumpbox Instance ID | string | N/A   |
+| nat_instance_id     | NAT Instance IDs    |  list  | N/A   |
+| private_subnet_ids  | Private Subnet IDs  |  list  | N/A   |
+| public_subnet_ids   | Public Subnet IDs   |  list  | N/A   |
+| vpc_id              | VPC ID              | string | N/A   |
 
 ### Lessons Learned
 
-- `t3a.nano` seems to be the current cheapest/decent instance size to use. Setting up cost savings in AWS Billing can make them even cheaper
+- `t4g.nano` seems to be the current cheapest/decent instance size to use. Setting up cost savings in AWS Billing can make them even cheaper
 - Using two AZs, each mapped to their own NAT instance to minimize cross AZ network cost
+- Not quite a lesson learned, but worth pointing out that destroying these VPCs when you're not using them will result in an even lower bill
 
 ### References
 

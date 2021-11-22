@@ -42,3 +42,7 @@ resource "aws_instance" "jumpbox" {
     })
   )
 }
+
+output "jumpbox_instance_id" {
+  value = var.enable_jumpbox_instance ? aws_instance.jumpbox[0].id : ""
+}

@@ -5,6 +5,6 @@ variable "nat_instance_count" {
 
 variable "nat_intance_type" {
   description = "low-cost instance type for NAT instance"
-  default     = "t3a.nano"
+  default     = "t4g.nano"
 }
 

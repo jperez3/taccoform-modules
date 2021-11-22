@@ -11,7 +11,7 @@ resource "aws_iam_role" "ec2" {
     tomap({
       "Name" = local.nat_instance_name
     })
-  )  
+  )
 
 }
 
@@ -31,7 +31,7 @@ resource "aws_iam_instance_profile" "ec2" {
     tomap({
       "Name" = local.nat_instance_name
     })
-  )  
+  )
 }
 
 ##################
@@ -89,7 +89,7 @@ resource "aws_instance" "nat" {
   # Script to give NAT Instance time to wake up
   provisioner "local-exec" {
     command = "./${path.module}/files/check_instance_state.sh ${self.id}"
-  }  
+  }
 
   tags = merge(
     local.common_tags,

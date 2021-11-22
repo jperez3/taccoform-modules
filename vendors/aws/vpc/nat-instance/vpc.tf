@@ -26,7 +26,7 @@ resource "aws_internet_gateway" "igw" {
     local.common_tags,
     tomap({
       "Name"         = "igw-${local.vpc_name}"
-      "Network_Type" = "public"
+      "network-type" = "public"
     })
   )
 }
@@ -44,7 +44,7 @@ resource "aws_route_table" "public" {
     local.common_tags,
     tomap({
       "Name"         = "public0-${local.vpc_name}"
-      "Network_Type" = "public"
+      "network-type" = "public"
     })
   )
 }
@@ -61,7 +61,7 @@ resource "aws_subnet" "public" {
     local.common_tags,
     tomap({
       "Name"         = "public${count.index}-${local.vpc_name}"
-      "Network_Type" = "public"
+      "network-type" = "public"
     })
   )
 }
@@ -94,7 +94,7 @@ resource "aws_route_table" "private" {
     local.common_tags,
     tomap({
       "Name"         = "private${count.index}-${local.vpc_name}"
-      "Network_Type" = "private"
+      "network-type" = "private"
     })
   )
 }
@@ -111,7 +111,7 @@ resource "aws_subnet" "private" {
     local.common_tags,
     tomap({
       "Name"         = "private${count.index}-${local.vpc_name}"
-      "Network_Type" = "private"
+      "network-type" = "private"
     })
   )
 }

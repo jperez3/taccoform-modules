@@ -19,9 +19,9 @@ locals {
   vpc_name          = var.custom_vpc_name != "" ? var.custom_vpc_name : "${var.vpc_name_prefix}-${var.env}"
 
   common_tags = {
-    Environment = var.env
-    Managed_By  = "terraform"
-    VPC_Name    = local.vpc_name
+    environment = var.env
+    managed-by  = "terraform"
+    vpc-name    = local.vpc_name
   }
 }
 

@@ -76,6 +76,40 @@ module "vpc" {
   - Public Subnets: `10.123.64.0/20` + `10.123.80.0/20`
 - Cost: ~$6/month  
 
+#### Interacting with VPC
+
+* To interact with the VPC from another terraform workspace, use a `data source` lookup like the one below to query info:
+
+`data_source.tf`
+```hcl
+
+data "aws_vpc" "selected" {
+  
+  filter {
+    name   = "tag:Name"
+    values = ["main-prod"] 
+  }
+}
+
+data "aws_subnet_ids" "private" {
+  vpc_id = data.aws_vpc.selected.id
+
+  filter {
+    name   = "tag:network-zone"
+    values = ["private"]
+  }
+}
+
+
+resource "aws_instance" "test" {
+  count = 2
+  
+  ami                    = "ami-1234567890"
+  instance_type          = "t4g.nano"
+  subnet_id              = data.aws_subnet_ids.private[count.index].ids
+}
+```
+
 #### Inputs
 
 | Variable Name           | Description                                     | Options                       |  Type   | Required? | Notes |

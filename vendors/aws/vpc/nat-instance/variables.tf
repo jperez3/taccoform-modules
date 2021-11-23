@@ -24,4 +24,3 @@ locals {
     vpc-name    = local.vpc_name
   }
 }
-

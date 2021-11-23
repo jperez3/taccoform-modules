@@ -7,4 +7,3 @@ variable "nat_intance_type" {
   description = "low-cost instance type for NAT instance"
   default     = "t4g.nano"
 }
-

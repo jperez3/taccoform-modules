@@ -126,8 +126,6 @@ resource "aws_instance" "test" {
 | :------------------ | :------------------ | :----: | :---- |
 | jumpbox_instance_id | Jumpbox Instance ID | string | N/A   |
 | nat_instance_id     | NAT Instance IDs    |  list  | N/A   |
-| private_subnet_ids  | Private Subnet IDs  |  list  | N/A   |
-| public_subnet_ids   | Public Subnet IDs   |  list  | N/A   |
 | vpc_id              | VPC ID              | string | N/A   |
 
 ### Lessons Learned

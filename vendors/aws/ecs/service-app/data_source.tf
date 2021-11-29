@@ -1,4 +1,4 @@
-data "aws_ecs_cluster" "current" {
+data "aws_ecs_cluster" "selected" {
   cluster_name = local.ecs_cluster_name
 }
 

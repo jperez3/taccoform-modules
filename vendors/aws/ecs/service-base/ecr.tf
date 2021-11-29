@@ -1,4 +1,4 @@
-resource "aws_ecr_repository" "repo" {
+resource "aws_ecr_repository" "app" {
   count = var.enable_ecr_repo ? 1 : 0
 
   name = local.ecr_repo_name

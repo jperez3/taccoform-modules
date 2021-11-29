@@ -1,5 +1,5 @@
 resource "aws_kms_key" "shared_cluster" {
-  description             = "${local.cluster_name} logging"
+  description             = "${local.cluster_name} ECS cluster default key"
   deletion_window_in_days = 7
 
   tags = merge(

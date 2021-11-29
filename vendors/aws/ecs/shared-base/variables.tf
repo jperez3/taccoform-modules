@@ -14,9 +14,20 @@ variable "custom_cluster_name" {
   default     = ""
 }
 
+variable "vpc_name_prefix" {
+  description = "prefix for establishing uniqueness between VPCs in same account"
+  default     = "main"
+}
+
+variable "custom_vpc_name" {
+  description = "overrides the default naming structure for VPC creation"
+  default     = ""
+}
+
 
 locals {
   cluster_name = var.custom_cluster_name != "" ? var.custom_cluster_name : "${var.cluster_name_prefix}-${var.env}"
+  vpc_name      = var.custom_vpc_name != "" ? var.custom_vpc_name : "${var.vpc_name_prefix}-${var.env}"
 
   common_tags = {
     environment      = var.env

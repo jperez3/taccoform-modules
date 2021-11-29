@@ -1,5 +1,6 @@
 resource "aws_iam_role" "autoscale" {
-  name = "autoscale-${var.cluster_name_prefix}-${var.env}"
+  name = "autoscale-${local.cluster_name}"
+  path = "/${var.env}/${local.cluster_name}/"
 
   assume_role_policy = <<EOF
 {
@@ -15,6 +16,14 @@ resource "aws_iam_role" "autoscale" {
   ]
 }
 EOF
+
+
+  tags = merge(
+    local.common_tags,
+    tomap({
+      "Name" = "autoscale-${local.cluster_name}"
+    })
+  )
 }
 
 resource "aws_iam_role_policy_attachment" "autoscale" {

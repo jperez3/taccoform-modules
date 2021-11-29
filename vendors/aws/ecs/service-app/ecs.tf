@@ -1,6 +1,6 @@
 resource "aws_ecs_service" "app" {
   name            = local.app_name
-  cluster         = data.aws_ecs_cluster.current.id
+  cluster         = data.aws_ecs_cluster.selected.id
   task_definition = aws_ecs_task_definition.mongo.arn
   desired_count   = 2
   iam_role        = aws_iam_role.foo.arn

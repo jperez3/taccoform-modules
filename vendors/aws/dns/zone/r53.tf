@@ -19,7 +19,7 @@ resource "aws_route53_zone" "private" {
 
   name = var.domain
   vpc {
-    vpc_id = data.aws_vpc.selected.id
+    vpc_id = data.aws_vpc.selected[0].id
   }
 
   tags = merge(

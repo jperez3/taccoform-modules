@@ -1,5 +1,5 @@
 variable "env" {
-    description = "unique environment/stage name"
+  description = "unique environment/stage name"
 }
 
 variable "domain" {

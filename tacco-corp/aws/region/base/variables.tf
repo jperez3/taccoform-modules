@@ -11,5 +11,5 @@ locals {
   # removes hyphens from region to shorten dns name
   region = replace(data.aws_region.current.name, "-","")
 
-  subject_alternative_names = concat(var.subject_alternative_names, ["*.${local.region].${var.domain})
+  subject_alternative_names = concat(var.subject_alternative_names, ["*.${local.region}.${var.domain}"])
 }

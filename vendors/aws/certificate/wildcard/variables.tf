@@ -3,6 +3,10 @@ variable "env" {
   type        = string
 }
 
+variable "domain" {
+  description = "domain name to use for environment"
+}
+
 locals {
   common_tags = {
     Environment      = var.env

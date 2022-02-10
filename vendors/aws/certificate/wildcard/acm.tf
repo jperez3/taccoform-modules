@@ -1,11 +1,17 @@
 resource "aws_acm_certificate" "wildcard" {
   domain_name       = var.domain
   validation_method = "DNS"
-}
 
-data "aws_route53_zone" "wildcard" {
-  name         = var.domain
-  private_zone = false
+
+  subject_alternative_names = concat(["*.${var.domain}"], var.subject_alternative_names)
+
+  tags = merge(
+    local.common_tags,
+    tomap({
+      "Name" = var.domain,
+      "Cert-Type" = "wildcard"
+    })
+  )
 }
 
 resource "aws_route53_record" "wildcard" {

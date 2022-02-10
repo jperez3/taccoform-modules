@@ -3,6 +3,6 @@ module "wildcard_cert" {
 
   domain = var.domain
   env    = var.env
-  subject_alternative_names = var.subject_alternative_names
+  subject_alternative_names = local.subject_alternative_names
 
 }

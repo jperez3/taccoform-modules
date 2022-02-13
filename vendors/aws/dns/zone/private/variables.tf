@@ -11,7 +11,9 @@ variable "vpc_name" {
 
 locals {
   common_tags = {
+    DNS-Zone    = "private"
     Environment = var.env
-    Managed-by  = "terraform"
+    Managed-By  = "terraform"
+    VPC-Name    = var.vpc_name
   }
 }

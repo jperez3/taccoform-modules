@@ -6,7 +6,7 @@ module "dns_zone" {
 
 }
 
-output "nameservers" {
+output "name_servers" {
   description = "the nameservers for your route53 zone"
-  value       = module.dns_zone.nameservers
+  value       = module.dns_zone.name_servers
 }

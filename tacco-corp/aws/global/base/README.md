@@ -24,9 +24,9 @@ module "global_base" {
 
 }
 
-output "nameservers" {
+output "name_servers" {
   description = "the nameservers for your route53 zone"
-  value       = module.global_base.nameservers
+  value       = module.global_base.name_servers
 }
 
 ```

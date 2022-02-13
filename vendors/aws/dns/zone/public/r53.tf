@@ -12,5 +12,5 @@ resource "aws_route53_zone" "public" {
 
 output "name_servers" {
   description = "list of name servers for zone"
-  value       = aws_route53_zone.public.name_servers
+  value       = flatten(aws_route53_zone.public.name_servers)
 }

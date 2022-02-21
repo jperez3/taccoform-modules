@@ -1,7 +1,4 @@
-variable "enable_jumpbox_instance" {
-  description = "Creates jumpbox instance to validate NAT instance functionality"
-  default     = false
-}
+
 
 resource "aws_security_group" "jumpbox" {
   count = var.enable_jumpbox_instance ? 1 : 0

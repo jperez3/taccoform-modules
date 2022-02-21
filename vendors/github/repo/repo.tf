@@ -8,3 +8,4 @@ resource "github_repository" "service" {
     owner      = var.template_owner
     repository = var.template_repository
   }
+}

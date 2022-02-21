@@ -1,4 +1,4 @@
-variable "visibility" {
+variable "repo_visibility" {
     description = "sets repo to public or private"
     default     = "public"
 }

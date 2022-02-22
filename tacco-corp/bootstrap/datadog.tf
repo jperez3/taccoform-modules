@@ -1,4 +1,7 @@
 resource "datadog_monitor" "service" {
+
+  count = var.enable_dd_monitor
+
   name               = "basic monitor for ${var.service}"
   type               = "metric alert"
   message            = "Monitor triggered. Notify: @operations-team"

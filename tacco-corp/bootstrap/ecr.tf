@@ -1,6 +1,8 @@
 resource "aws_ecr_repository" "service" {
-  name                 = "bar"
-  image_tag_mutability = "MUTABLE"
+
+  count = var.enable_ecr
+
+  name = var.service
 
   image_scanning_configuration {
     scan_on_push = true

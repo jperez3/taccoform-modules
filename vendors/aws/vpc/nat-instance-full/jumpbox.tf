@@ -1,14 +1,11 @@
-variable "enable_jumpbox_instance" {
-  description = "Creates jumpbox instance to validate NAT instance functionality"
-  default     = false
-}
+
 
 resource "aws_security_group" "jumpbox" {
   count = var.enable_jumpbox_instance ? 1 : 0
 
   name        = "jumpbox${count.index}-${local.vpc_name}"
   description = "${local.vpc_name} jumpbox instance security group"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.current.id
 
   egress {
     from_port   = 0
